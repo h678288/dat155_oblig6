@@ -23,7 +23,9 @@ import TerrainBufferGeometry from './terrain/TerrainBufferGeometry.js';
 import { GLTFLoader } from './loaders/GLTFLoader.js';
 import { SimplexNoise } from './lib/SimplexNoise.js';
 import { Ocean } from './lib/Ocean.js';
-import Parrot from './objects/Parrot.js';
+import Stork from './objects/Stork.js';
+
+import Shark from './objects/Shark.js';
 
 async function main() {
 
@@ -146,7 +148,7 @@ async function main() {
 
     scene.add(terrain);
 
-    const fog = new FogExp2(0xFFFFFF, 0.03);
+    const fog = new FogExp2(0xFFFFFF, 0.0);
     scene.fog = fog;
 
 
@@ -157,12 +159,25 @@ async function main() {
     water.position.y = 6;
     scene.add(water);
 
-    const lava = new Ocean(9, 9, 'resources/images/lava.jpg');
+    const lava = new Ocean(9, 9, 'resources/images/waternomals.jpg');
     lava.position.y = 17;
     lava.position.x = 25;
     scene.add(lava);
 
 
+    /**
+     * add parrot
+     */
+
+    const stork = new Stork(scene);
+
+    /**
+     * add ship
+     * @param path
+     * @returns {Promise<*>}
+     */
+
+    const shark = new Shark(scene);
 
     /**
      * Add trees
@@ -170,6 +185,8 @@ async function main() {
 
     // instantiate a GLTFLoader:
     const loader = new GLTFLoader();
+
+
 
     async function loadTreeModel(path) {
         const gltf = await loader.loadAsync(path);
@@ -191,7 +208,7 @@ async function main() {
     ];
 
 
-    for (let i = 0; i < 4000; i++) {
+    for (let i = 0; i < 400; i++) {
 
         // Random world position
         const x = (Math.random() - 0.5) * terrainGeometry.width;
@@ -237,7 +254,7 @@ async function main() {
 
     let yaw = 0;
     let pitch = 0;
-    const mouseSensitivity = 0.001;
+    const mouseSensitivity = 0.010;
 
     function updateCamRotation(event) {
         yaw += event.movementX * mouseSensitivity;
@@ -296,9 +313,13 @@ async function main() {
 
     let then = performance.now();
     function loop(now) {
+        stork.animate((now - then) * 0.001);
+        shark.animate((now - then) * 0.001);
+
 
         water.animateOcean();
         lava.animateOcean();
+
         const delta = now - then;
         then = now;
 
