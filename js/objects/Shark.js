@@ -1,44 +1,50 @@
 "use strict";
 
-import {
-    Object3D
-} from "../lib/three.module.js";
-import {GLTFLoader} from "../loaders/GLTFLoader.js";
+import { GLTFLoader } from "../loaders/GLTFLoader.js";
+// Added Box3 and Vector3 to imports
+import { AnimationMixer, Object3D, MathUtils, Box3, Vector3 } from "../lib/three.module.js";
 
-export default class FlyingParrot {
+export default class Shark {
+
     constructor(scene) {
 
+        this.mesh = null;
+        this.mixer = null;
 
-        this.orbitNode = new Object3D();
+        this.speed = 5; 
+        this.direction = 1; 
+        this.maxZ = 40; 
+        this.minZ = -40;  
 
-        this.orbitNode.position.x = 0
-        this.orbitNode.position.y = 21
-        this.orbitNode.position.z = 0
-        scene.add(this.orbitNode)
+        this.group = new Object3D();
+        this.group.position.set(0, 5.8, this.minZ); 
+        scene.add(this.group);
 
-
-        let loader = new GLTFLoader()
+        let loader = new GLTFLoader();
         loader.load(
-            // resource URL
             'resources/models/shark.glb',
-            // called when resource is loaded
-            (object) => {
-                const sharkObj = object.scene.children[0]
+            (gltf) => {
+                this.mesh = gltf.scene.children[0];
 
+                this.mesh.scale.multiplyScalar(0.06);
+                this.mesh.castShadow = true;
+                
+                // 
+                const box = new Box3().setFromObject(this.mesh);
+                const center = box.getCenter(new Vector3());
 
-                this.orbitNode.add(sharkObj)
-                sharkObj.rotation.set(0, 0, 0);
-                sharkObj.rotation.y = Math.PI;
+                this.mesh.position.sub(center);
 
-                sharkObj.position.x = 0.0001;
-                sharkObj.scale.multiplyScalar(0.06)
+                this.group.add(this.mesh);
 
-                sharkObj.castShadow = true;
-
-
+                if (gltf.animations && gltf.animations.length > 0) {
+                    this.mixer = new AnimationMixer(this.mesh);
+                    const action = this.mixer.clipAction(gltf.animations[0]);
+                    action.play();
+                }
             },
             (xhr) => {
-                console.log(((xhr.loaded / xhr.total) * 100) + '% loaded');
+                // console.log(((xhr.loaded / xhr.total) * 100) + '% loaded');
             },
             (error) => {
                 console.error('Error loading model.', error);
@@ -46,18 +52,24 @@ export default class FlyingParrot {
         );
     }
 
-    animate() {
+    animate(delta) {
+        if (this.mixer) {
+            this.mixer.update(delta);
+        }
 
-        this.rotateObject(this.orbitNode, [0.0, 0.001, 0.0]);
+        // Move the group (the pivot)
+        this.group.position.z += this.speed * this.direction * delta;
 
-
+        // Check boundaries
+        if (this.group.position.z >= this.maxZ) {
+            this.direction = -1;
+            
+            // Rotate the GROUP, which now rotates the shark perfectly around its center
+            this.group.rotation.y = Math.PI; 
+        } 
+        else if (this.group.position.z <= this.minZ) {
+            this.direction = 1;
+            this.group.rotation.y = 0; 
+        }
     }
-
-    rotateObject(object, rotation){
-
-        object.rotation.x += rotation[0];
-        object.rotation.y += rotation[1];
-        object.rotation.z += rotation[2];
-    }
-
 }

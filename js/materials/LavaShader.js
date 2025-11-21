@@ -1,19 +1,19 @@
-import {ShaderMaterial} from "../lib/three.module.js";
+import { ShaderMaterial } from "../lib/three.module.js";
 import * as THREE from "../lib/three.module.js";
 
 export default class LavaShader extends ShaderMaterial {
 
     constructor({
-                uniforms: {
-                    fogDensity = 'fogDensity',
-                    fogColor = 'fogColor',
-                    time = 'time',
-                    uvScale = 'uvScale',
-                    texture1 = 'texture1',
-                    texture2 = 'texture2',
-                    color = 'color'
-                }
-                }) {
+        uniforms: {
+            fogDensity = 'fogDensity',
+            fogColor = 'fogColor',
+            time = 'time',
+            uvScale = 'uvScale',
+            texture1 = 'texture1',
+            texture2 = 'texture2',
+            color = 'color'
+        }
+    }) {
 
         texture1.wrapS = texture1.wrapT = THREE.RepeatWrapping;
         texture2.wrapS = texture2.wrapT = THREE.RepeatWrapping;

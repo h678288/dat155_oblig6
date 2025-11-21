@@ -9,6 +9,7 @@ export default class Stork {
         // Oppretter et usynlig Object3D som storken skal fly rundt
         this.orbitNode = new Object3D();
         this.orbitNode.position.set(-20, 20, -20);
+        this.orbitNode.visible = true;
         scene.add(this.orbitNode);
 
         this.mixer = null;
@@ -23,7 +24,7 @@ export default class Stork {
                 storkObj.rotation.y = -Math.PI;
                 storkObj.rotation.z = -Math.PI / 4;
                 storkObj.position.x = 50;
-                storkObj.scale.multiplyScalar(0.06);
+                storkObj.scale.multiplyScalar(0.03);
                 storkObj.castShadow = true;
 
 

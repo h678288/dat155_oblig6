@@ -22,7 +22,7 @@ import TextureSplattingMaterial from './materials/TextureSplattingMaterial.js';
 import TerrainBufferGeometry from './terrain/TerrainBufferGeometry.js';
 import { GLTFLoader } from './loaders/GLTFLoader.js';
 import { SimplexNoise } from './lib/SimplexNoise.js';
-import { Ocean } from './lib/Ocean.js';
+import { Ocean } from './terrain/Ocean.js';
 import Stork from './objects/Stork.js';
 
 import Shark from './objects/Shark.js';
@@ -93,12 +93,12 @@ async function main() {
 
     const skyBox = new CubeTextureLoader();
     scene.background = skyBox.load([
-        "resources/images/skybox/Daylight Box_Right.bmp",
-        "resources/images/skybox/Daylight Box_Left.bmp",
-        "resources/images/skybox/Daylight Box_Top.bmp",
-        "resources/images/skybox/Daylight Box_Bottom.bmp",
-        "resources/images/skybox/Daylight Box_Front.bmp",
-        "resources/images/skybox/Daylight Box_Back.bmp"
+        "resources/images/skybox/Daylight_Box_Right.bmp",
+        "resources/images/skybox/Daylight_Box_Left.bmp",
+        "resources/images/skybox/Daylight_Box_Top.bmp",
+        "resources/images/skybox/Daylight_Box_Bottom.bmp",
+        "resources/images/skybox/Daylight_Box_Front.bmp",
+        "resources/images/skybox/Daylight_Box_Back.bmp"
     ])
 
     /**
@@ -132,7 +132,7 @@ async function main() {
     snowyRockTexture.repeat.set(1500 / width, 1500 / width);
 
 
-    const splatMap = new TextureLoader().load('resources/images/splatmap4.png');
+    const splatMap = new TextureLoader().load('resources/images/splatmap_new.png');
 
     const terrainMaterial = new TextureSplattingMaterial({
         color: 0xffffff,
@@ -188,49 +188,39 @@ async function main() {
 
 
 
-    async function loadTreeModel(path) {
+    async function loadModel(path) {
         const gltf = await loader.loadAsync(path);
         return gltf.scene.children[0];
     }
 
     const treeModels = [
-        await loadTreeModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palmTall.glb"),
-        await loadTreeModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palm.glb"),
-        await loadTreeModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palmShort.glb"),
-        await loadTreeModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palmDetailedShort.glb"),
-        await loadTreeModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stone_tallA.glb"),
-        await loadTreeModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stone_tallC.glb"),
-        await loadTreeModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stone_tallD.glb"),
-        await loadTreeModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stump_old.glb")
-
-
-
+        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palmTall.glb"),
+        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palm.glb"),
+        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palmShort.glb"),
+        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palmDetailedShort.glb"),
+        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stone_tallA.glb"),
+        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stone_tallC.glb"),
+        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stone_tallD.glb"),
+        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stump_old.glb")
     ];
 
 
-    for (let i = 0; i < 400; i++) {
+    for (let i = 0; i < 1500; i++) {
 
-        // Random world position
         const x = (Math.random() - 0.5) * terrainGeometry.width;
         const z = (Math.random() - 0.5) * terrainGeometry.width;
 
-        // Height of terrain at this point
         const y = terrainGeometry.getHeightAt(x, z);
 
-        // Avoid tall peaks + low valleys
-        if (y < 5 || y > 11) continue;
+        if (y < 6 || y > 11) continue;
 
-        // Pick random tree model
         const baseTree = treeModels[Math.floor(Math.random() * treeModels.length)];
         const tree = baseTree.clone(true);
 
-        // Set tree position
         tree.position.set(x, y, z);
 
-        // Variety in rotation
         tree.rotation.y = Math.random() * Math.PI * 2;
 
-        // Scale randomness
         tree.scale.multiplyScalar(0.7 + Math.random() * 1.8);
 
         scene.add(tree);
@@ -313,14 +303,15 @@ async function main() {
 
     let then = performance.now();
     function loop(now) {
-        stork.animate((now - then) * 0.001);
-        shark.animate((now - then) * 0.001);
-
 
         water.animateOcean();
         lava.animateOcean();
 
         const delta = now - then;
+
+        stork.animate(delta * 0.001);
+        shark.animate(delta * 0.001);
+
         then = now;
 
         const moveSpeed = move.speed * delta;
