@@ -26,7 +26,7 @@ export class Ocean extends Water{
 
     }
 
-    animateOcean = () => {
+    animate() {
         this.material.uniforms["time"].value += 1.0 / 360.0;
     }
 

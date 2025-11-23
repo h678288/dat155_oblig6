@@ -41,8 +41,6 @@ var Water = function(geometry, options) {
     var side = options.side !== undefined ? options.side : FrontSide;
     var fog = options.fog !== undefined ? options.fog : false;
 
-    //
-
     var mirrorPlane = new Plane();
     var normal = new Vector3();
     var mirrorWorldPosition = new Vector3();

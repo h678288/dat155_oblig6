@@ -10,10 +10,7 @@ import {
     Vector3,
     AxesHelper,
     CubeTextureLoader,
-    PlaneBufferGeometry,
     FogExp2,
-    Group,
-    Light,
     PointLight,
 } from './lib/three.module.js';
 
@@ -87,7 +84,7 @@ async function main(vr = false) {
     directionalLight.target.position.set(0, 15, 0);
     scene.add(directionalLight.target);
 
-    const lavaLight = new DirectionalLight(0xFC6A00);
+    const lavaLight = new PointLight(0xFC6A00, 1, 10);
     lavaLight.position.set(25, 17, 0);
     scene.add(lavaLight);
 
@@ -133,7 +130,7 @@ async function main(vr = false) {
     grassTexture.wrapT = RepeatWrapping;
     grassTexture.repeat.set(5000 / width, 5000 / width);
 
-    const snowyRockTexture = new TextureLoader().load('resources/textures/snowy_rock_01.png');
+    const snowyRockTexture = new TextureLoader().load('resources/textures/rock_01.png');
     snowyRockTexture.wrapS = RepeatWrapping;
     snowyRockTexture.wrapT = RepeatWrapping;
     snowyRockTexture.repeat.set(1500 / width, 1500 / width);
@@ -159,19 +156,14 @@ async function main(vr = false) {
     scene.fog = fog;
 
 
-    // water
-    const waterGeometry = new PlaneBufferGeometry(100, 100);
-
     const water = new Ocean(100, 100, 'resources/images/waternormals.jpg');
     water.position.y = 6;
     scene.add(water);
 
-    // const lava = new Ocean(9, 9, 'resources/images/lava.jpg');
-    // lava.position.y = 17;
-    // lava.position.x = 25;
-
+    /**
+     * add lava
+     */
     const lava = new Lava();
-
     scene.add(lava);
 
 
@@ -189,8 +181,6 @@ async function main(vr = false) {
 
     // instantiate a GLTFLoader:
     const loader = new GLTFLoader();
-
-
 
     async function loadModel(path) {
         const gltf = await loader.loadAsync(path);
@@ -315,11 +305,9 @@ async function main(vr = false) {
     let then = performance.now();
     function loop(now) {
 
-
-
         const delta = now - then;
 
-        water.animateOcean();
+        water.animate();
         lava.animate();
 
         stork.animate(delta * 0.001);
@@ -360,11 +348,9 @@ async function main(vr = false) {
         renderer.render(scene, camera);
 
         if (!vr) requestAnimationFrame(loop);
-
     };
 
     loop(performance.now());
-
 }
 
 main(true); // Start application
