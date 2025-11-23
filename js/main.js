@@ -27,6 +27,7 @@ import Stork from './objects/Stork.js';
 import Shark from './objects/Shark.js';
 import { VRButton } from './lib/VRButton.js'
 import Lava from './terrain/Lava.js'
+import Sun from './objects/Sun.js';
 
 async function main(vr = false) {
 
@@ -64,26 +65,6 @@ async function main(vr = false) {
      */
     document.body.appendChild(renderer.domElement);
 
-
-    /**
-     * Add light
-     */
-    const directionalLight = new DirectionalLight(0xffffff);
-    directionalLight.position.set(300, 400, 0);
-
-    directionalLight.castShadow = true;
-
-    //Set up shadow properties for the light
-    directionalLight.shadow.mapSize.width = 512;
-    directionalLight.shadow.mapSize.height = 512;
-    directionalLight.shadow.camera.near = 0.5;
-    directionalLight.shadow.camera.far = 2000;
-
-    scene.add(directionalLight);
-
-    // Set direction
-    directionalLight.target.position.set(0, 15, 0);
-    scene.add(directionalLight.target);
 
     // const lavaLight = new PointLight(0xFC6A00, 1, 10);
     // lavaLight.position.set(25, 17, 0);
@@ -153,6 +134,12 @@ async function main(vr = false) {
     terrain.receiveShadow = true;
 
     scene.add(terrain);
+
+    /**
+     * add sun
+     */
+    const sun = new Sun();
+    scene.add(sun);
 
     const fog = new Fog(0xFFFFFF, 1, 250);
     scene.fog = fog;
@@ -309,6 +296,7 @@ async function main(vr = false) {
 
         const delta = now - then;
 
+        sun.animate();
         water.animate();
         lava.animate();
 
