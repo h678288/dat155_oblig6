@@ -11,8 +11,7 @@ import {
     AxesHelper,
     CubeTextureLoader,
     PlaneBufferGeometry,
-    Fog,
-    FogExp2
+    FogExp2,
 } from './lib/three.module.js';
 
 import Utilities from './lib/Utilities.js';
@@ -24,14 +23,12 @@ import { GLTFLoader } from './loaders/GLTFLoader.js';
 import { SimplexNoise } from './lib/SimplexNoise.js';
 import { Ocean } from './terrain/Ocean.js';
 import Stork from './objects/Stork.js';
-
 import Shark from './objects/Shark.js';
+import { VRButton } from './lib/VRButton.js'
 
 async function main() {
 
     const scene = new Scene();
-
-
 
     const axesHelper = new AxesHelper(15);
     scene.add(axesHelper);
@@ -44,6 +41,7 @@ async function main() {
 
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = PCFSoftShadowMap;
+
 
     /**
      * Handle window resize:
@@ -62,6 +60,10 @@ async function main() {
      * Add canvas element to DOM.
      */
     document.body.appendChild(renderer.domElement);
+
+    // Fjern kommentar for å bruke vr
+    renderer.xr.enabled = true;
+    document.body.appendChild(VRButton.createButton(renderer));
 
     /**
      * Add light
