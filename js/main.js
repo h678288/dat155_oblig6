@@ -31,8 +31,8 @@ async function main(vr = false) {
 
     const scene = new Scene();
 
-    const axesHelper = new AxesHelper(15);
-    scene.add(axesHelper);
+    // const axesHelper = new AxesHelper(15);
+    // scene.add(axesHelper);
 
     const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 

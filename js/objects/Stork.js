@@ -10,8 +10,8 @@ export default class Stork {
         this.orbitNode = new Object3D();
         this.orbitNode.position.set(26, 20, 1);
 
-        const axes = new AxesHelper(2); // size = 2 units
-        this.orbitNode.add(axes);
+        // const axes = new AxesHelper(2);
+        // this.orbitNode.add(axes);
         scene.add(this.orbitNode);
 
         this.mixer = null;
