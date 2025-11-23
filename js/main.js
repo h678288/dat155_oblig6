@@ -11,6 +11,7 @@ import {
     AxesHelper,
     CubeTextureLoader,
     Fog,
+    AmbientLight,
 } from './lib/three.module.js';
 
 import Utilities from './lib/Utilities.js';
@@ -63,6 +64,8 @@ async function main(vr = false) {
      */
     document.body.appendChild(renderer.domElement);
 
+    const ambientlight = new AmbientLight(0xffffff, 0.01);
+    scene.add(ambientlight);
 
     // const lavaLight = new PointLight(0xFC6A00, 1, 10);
     // lavaLight.position.set(25, 17, 0);
@@ -115,7 +118,6 @@ async function main(vr = false) {
     snowyRockTexture.wrapS = RepeatWrapping;
     snowyRockTexture.wrapT = RepeatWrapping;
     snowyRockTexture.repeat.set(1500 / width, 1500 / width);
-
 
     const splatMap = new TextureLoader().load('resources/images/splatmap_new.png');
 

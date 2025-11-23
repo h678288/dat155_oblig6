@@ -8,7 +8,6 @@ export default class LavaShader extends ShaderMaterial {
             time = 'time',
             noiseMap = 'noiseMap',
             diffuseMap = 'diffuseMap',
-            color = 'color'
         }
     }) {
 
@@ -75,10 +74,6 @@ export default class LavaShader extends ShaderMaterial {
                 diffuseMap: {
                     value: diffuseMap
                 },
-                color: {
-                    value: color
-                }
-
             }
         });
 
