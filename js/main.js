@@ -26,6 +26,7 @@ import { Ocean } from './terrain/Ocean.js';
 import Stork from './objects/Stork.js';
 import Shark from './objects/Shark.js';
 import { VRButton } from './lib/VRButton.js'
+import Lava from './terrain/Lava.js'
 
 async function main(vr = false) {
 
@@ -160,29 +161,26 @@ async function main(vr = false) {
     water.position.y = 6;
     scene.add(water);
 
-    const lava = new Ocean(9, 9, 'resources/images/waternomals.jpg');
-    lava.position.y = 17;
-    lava.position.x = 25;
+    // const lava = new Ocean(9, 9, 'resources/images/lava.jpg');
+    // lava.position.y = 17;
+    // lava.position.x = 25;
+
+    const lava = new Lava();
+
     scene.add(lava);
 
 
     /**
-     * add parrot
+     * add stork
      */
 
     const stork = new Stork(scene);
 
     /**
-     * add ship
-     * @param path
-     * @returns {Promise<*>}
+     * add shark
      */
 
     const shark = new Shark(scene);
-
-    /**
-     * Add trees
-     */
 
     // instantiate a GLTFLoader:
     const loader = new GLTFLoader();
@@ -195,14 +193,14 @@ async function main(vr = false) {
     }
 
     const treeModels = [
-        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palmTall.glb"),
-        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palm.glb"),
-        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palmShort.glb"),
-        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/tree_palmDetailedShort.glb"),
-        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stone_tallA.glb"),
-        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stone_tallC.glb"),
-        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stone_tallD.glb"),
-        await loadModel("resources/models/kenney_nature-kit-ny/Models/GLTF format/stump_old.glb")
+        await loadModel("resources/models/tree_palmTall.glb"),
+        await loadModel("resources/models/tree_palm.glb"),
+        await loadModel("resources/models/tree_palmShort.glb"),
+        await loadModel("resources/models/tree_palmDetailedShort.glb"),
+        await loadModel("resources/models/stone_tallA.glb"),
+        await loadModel("resources/models/stone_tallC.glb"),
+        await loadModel("resources/models/stone_tallD.glb"),
+        await loadModel("resources/models/stump_old.glb")
     ];
 
 
@@ -312,10 +310,12 @@ async function main(vr = false) {
     let then = performance.now();
     function loop(now) {
 
-        water.animateOcean();
-        lava.animateOcean();
+
 
         const delta = now - then;
+
+        water.animateOcean();
+        lava.animate();
 
         stork.animate(delta * 0.001);
         shark.animate(delta * 0.001);
