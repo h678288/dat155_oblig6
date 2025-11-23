@@ -1,6 +1,6 @@
 "use strict";
 
-import * as THREE from '../lib/three.module'
+import * as THREE from '../lib/three.module.js'
 
 export default class Sun extends THREE.Group {
     constructor(radius = 5, distance = 70, orbitSpeed = 0.001) {
@@ -27,7 +27,7 @@ export default class Sun extends THREE.Group {
         this.add(this.sunMesh);
 
 
-        this.lightSource = new THREE.PointLight(0xffffff, 3, 300);
+        this.lightSource = new THREE.PointLight(0xffffff, 2, 300);
         this.lightSource.position.copy(this.sunMesh.position);
         this.lightSource.castShadow = false;
         this.add(this.lightSource);

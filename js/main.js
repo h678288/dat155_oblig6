@@ -10,8 +10,6 @@ import {
     Vector3,
     AxesHelper,
     CubeTextureLoader,
-    FogExp2,
-    PointLight,
     Fog,
 } from './lib/three.module.js';
 
@@ -143,7 +141,6 @@ async function main(vr = false) {
 
     const fog = new Fog(0xFFFFFF, 1, 250);
     scene.fog = fog;
-
 
     const water = new Ocean(100, 100, 'resources/images/waternormals.jpg');
     water.position.y = 6;
