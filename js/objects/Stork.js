@@ -1,6 +1,6 @@
 "use strict";
 
-import { Object3D, AnimationMixer } from "../lib/three.module.js";
+import { Object3D, AnimationMixer, AxesHelper } from "../lib/three.module.js";
 import { GLTFLoader } from "../loaders/GLTFLoader.js";
 
 export default class Stork {
@@ -8,8 +8,10 @@ export default class Stork {
 
         // Oppretter et usynlig Object3D som storken skal fly rundt
         this.orbitNode = new Object3D();
-        this.orbitNode.position.set(-20, 20, -20);
-        this.orbitNode.visible = true;
+        this.orbitNode.position.set(26, 20, 1);
+
+        const axes = new AxesHelper(2); // size = 2 units
+        this.orbitNode.add(axes);
         scene.add(this.orbitNode);
 
         this.mixer = null;
@@ -23,7 +25,7 @@ export default class Stork {
                 this.orbitNode.add(storkObj);
                 storkObj.rotation.y = -Math.PI;
                 storkObj.rotation.z = -Math.PI / 4;
-                storkObj.position.x = 50;
+                storkObj.position.x = 30;
                 storkObj.scale.multiplyScalar(0.03);
                 storkObj.castShadow = true;
 

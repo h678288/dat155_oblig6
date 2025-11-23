@@ -12,6 +12,7 @@ import {
     CubeTextureLoader,
     PlaneBufferGeometry,
     FogExp2,
+    Group,
 } from './lib/three.module.js';
 
 import Utilities from './lib/Utilities.js';
@@ -26,7 +27,7 @@ import Stork from './objects/Stork.js';
 import Shark from './objects/Shark.js';
 import { VRButton } from './lib/VRButton.js'
 
-async function main() {
+async function main(vr = false) {
 
     const scene = new Scene();
 
@@ -56,14 +57,12 @@ async function main() {
         renderer.setSize(window.innerWidth, window.innerHeight);
     }, false);
 
+
     /**
      * Add canvas element to DOM.
      */
     document.body.appendChild(renderer.domElement);
 
-    // Fjern kommentar for å bruke vr
-    renderer.xr.enabled = true;
-    document.body.appendChild(VRButton.createButton(renderer));
 
     /**
      * Add light
@@ -301,6 +300,13 @@ async function main() {
         }
     });
 
+    // VR
+    if (vr) {
+        document.body.appendChild(VRButton.createButton(renderer));
+        renderer.xr.enabled = true;
+        renderer.setAnimationLoop(loop);
+    }
+
     const velocity = new Vector3(0.0, 0.0, 0.0);
 
     let then = performance.now();
@@ -348,7 +354,7 @@ async function main() {
         // render scene:
         renderer.render(scene, camera);
 
-        requestAnimationFrame(loop);
+        if (!vr) requestAnimationFrame(loop);
 
     };
 
@@ -356,4 +362,4 @@ async function main() {
 
 }
 
-main(); // Start application
+main(true); // Start application
