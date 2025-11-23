@@ -6,7 +6,6 @@ import { GLTFLoader } from "../loaders/GLTFLoader.js";
 export default class Stork {
     constructor(scene) {
 
-        // Oppretter et usynlig Object3D som storken skal fly rundt
         this.orbitNode = new Object3D();
         this.orbitNode.position.set(26, 20, 1);
 
@@ -33,7 +32,6 @@ export default class Stork {
                 if (gltf.animations && gltf.animations.length > 0) {
                     this.mixer = new AnimationMixer(storkObj);
 
-                    // Use first animation clip (most GLBs only have one)
                     const action = this.mixer.clipAction(gltf.animations[0]);
                     action.play();
                 }
@@ -49,10 +47,8 @@ export default class Stork {
     }
 
     animate(delta) {
-        // Rotate around its orbit
         this.rotateObject(this.orbitNode, [0.0, 0.3 * delta, 0.0]);
 
-        // Update animation mixer to flap wings
         if (this.mixer) this.mixer.update(delta);
     }
 

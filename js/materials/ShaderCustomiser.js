@@ -7,7 +7,7 @@ export default class ShaderCustomiser {
 
         for (let name in chunks) {
             const chunk = chunks[name];
-            
+
             if (typeof chunk === 'string') {
                 code = this.replace(code, name, chunk);
             } else if (chunk.prepend) {
@@ -28,9 +28,9 @@ export default class ShaderCustomiser {
         const chunk = ShaderChunk[name];
 
         if (typeof chunk !== 'undefined') {
-            
+
             return code.replace(`#include <${name}>`,
-            `
+                `
             ${text}
             #include <${name}>
             `
@@ -50,7 +50,7 @@ export default class ShaderCustomiser {
         const chunk = ShaderChunk[name];
 
         if (typeof chunk !== 'undefined') {
-            
+
             return code.replace(`#include <${name}>`, text);
 
         } else {
@@ -67,9 +67,9 @@ export default class ShaderCustomiser {
         const chunk = ShaderChunk[name];
 
         if (typeof chunk !== 'undefined') {
-            
+
             return code.replace(`#include <${name}>`,
-            `
+                `
             #include <${name}>
             ${text}
             `

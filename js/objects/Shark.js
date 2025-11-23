@@ -11,13 +11,13 @@ export default class Shark {
         this.mesh = null;
         this.mixer = null;
 
-        this.speed = 5; 
-        this.direction = 1; 
-        this.maxZ = 40; 
-        this.minZ = -40;  
+        this.speed = 5;
+        this.direction = 1;
+        this.maxZ = 40;
+        this.minZ = -40;
 
         this.group = new Object3D();
-        this.group.position.set(0, 5.8, this.minZ); 
+        this.group.position.set(0, 5.8, this.minZ);
         scene.add(this.group);
 
         let loader = new GLTFLoader();
@@ -28,8 +28,7 @@ export default class Shark {
 
                 this.mesh.scale.multiplyScalar(0.06);
                 this.mesh.castShadow = true;
-                
-                // 
+
                 const box = new Box3().setFromObject(this.mesh);
                 const center = box.getCenter(new Vector3());
 
@@ -44,7 +43,7 @@ export default class Shark {
                 }
             },
             (xhr) => {
-                // console.log(((xhr.loaded / xhr.total) * 100) + '% loaded');
+                console.log(((xhr.loaded / xhr.total) * 100) + '% loaded');
             },
             (error) => {
                 console.error('Error loading model.', error);
@@ -61,12 +60,12 @@ export default class Shark {
 
         if (this.group.position.z >= this.maxZ) {
             this.direction = -1;
-            
-            this.group.rotation.y = Math.PI; 
-        } 
+
+            this.group.rotation.y = Math.PI;
+        }
         else if (this.group.position.z <= this.minZ) {
             this.direction = 1;
-            this.group.rotation.y = 0; 
+            this.group.rotation.y = 0;
         }
     }
 }

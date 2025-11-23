@@ -13,6 +13,7 @@ import {
     PlaneBufferGeometry,
     FogExp2,
     Group,
+    Light,
 } from './lib/three.module.js';
 
 import Utilities from './lib/Utilities.js';
@@ -81,6 +82,9 @@ async function main(vr = false) {
 
     scene.add(directionalLight);
 
+    const lavaLight = new Light(0xFC6A00);
+    lavaLight.position.set(25, 16, 0);
+
     // Set direction
     directionalLight.target.position.set(0, 15, 0);
     scene.add(directionalLight.target);
@@ -88,7 +92,6 @@ async function main(vr = false) {
     camera.position.z = 70;
     camera.position.y = 55;
     camera.rotation.x -= Math.PI * 0.25;
-
 
 
     // add skybox

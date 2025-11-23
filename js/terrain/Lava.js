@@ -9,7 +9,7 @@ export default class Lava extends THREE.Mesh {
             fragmentShader: LavaShader.fragmentShader,
             uniforms: {
                 time: 1.0,
-                noiseMap: new THREE.TextureLoader().load('./resources/textures/cloud.png'),
+                noiseMap: new THREE.TextureLoader().load('./resources/textures/noise.png'),
                 diffuseMap: new THREE.TextureLoader().load('./resources/textures/lava.jpg')
             }
         })
