@@ -25,7 +25,7 @@ export default class Stork {
                 this.orbitNode.add(storkObj);
                 storkObj.rotation.y = -Math.PI;
                 storkObj.rotation.z = -Math.PI / 4;
-                storkObj.position.x = 30;
+                storkObj.position.x = 20;
                 storkObj.scale.multiplyScalar(0.03);
                 storkObj.castShadow = true;
 

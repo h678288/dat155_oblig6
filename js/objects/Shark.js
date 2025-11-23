@@ -57,14 +57,11 @@ export default class Shark {
             this.mixer.update(delta);
         }
 
-        // Move the group (the pivot)
         this.group.position.z += this.speed * this.direction * delta;
 
-        // Check boundaries
         if (this.group.position.z >= this.maxZ) {
             this.direction = -1;
             
-            // Rotate the GROUP, which now rotates the shark perfectly around its center
             this.group.rotation.y = Math.PI; 
         } 
         else if (this.group.position.z <= this.minZ) {

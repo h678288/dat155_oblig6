@@ -7,7 +7,6 @@ import {
     TextureLoader,
 } from "../lib/three.module.js";
 
-// Cleaner ocean setup borrowed from fellow student.
 export class Ocean extends Water{
     constructor(width=1000, height=1000, textureUrl) {
         let geometry = new PlaneBufferGeometry(width, height);
