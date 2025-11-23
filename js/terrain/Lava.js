@@ -18,6 +18,9 @@ export default class Lava extends THREE.Mesh {
         this.rotation.x = -Math.PI / 2;
         this.position.set(25, 16, 0);
 
+        const lavaLight = new THREE.PointLight(0xFC6A00, 100, 100);
+        lavaLight.position.set(25, 17, 0);
+
     }
 
     animate() {

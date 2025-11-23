@@ -14,6 +14,7 @@ import {
     FogExp2,
     Group,
     Light,
+    PointLight,
 } from './lib/three.module.js';
 
 import Utilities from './lib/Utilities.js';
@@ -82,8 +83,9 @@ async function main(vr = false) {
 
     scene.add(directionalLight);
 
-    const lavaLight = new Light(0xFC6A00);
-    lavaLight.position.set(25, 16, 0);
+    const lavaLight = new PointLight(0xFC6A00, 1, 10);
+    lavaLight.position.set(25, 17, 0);
+    scene.add(lavaLight);
 
     // Set direction
     directionalLight.target.position.set(0, 15, 0);
