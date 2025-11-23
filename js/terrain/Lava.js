@@ -2,7 +2,7 @@ import * as THREE from "../lib/three.module.js";
 import LavaShader from "../materials/LavaShader.js";
 
 export default class Lava extends THREE.Mesh {
-    constructor(width = 10, height = 12) {
+    constructor(width = 10, height = 11) {
         let geometry = new THREE.PlaneGeometry(width, height);
         let material = new LavaShader({
             vertexShader: LavaShader.vertexShader,
