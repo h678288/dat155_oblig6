@@ -16,14 +16,22 @@ export default class MouseLookController {
         this.pitchQuaternion = new Quaternion();
         this.yawQuaternion = new Quaternion();
 
+        this.currentPitch = 0;
+        this.currentYaw = 0;
+        this.maxPitch = Math.PI / 2 - 0.01;
     }
 
     update(pitch, yaw) {
-        
-        this.pitchQuaternion.setFromAxisAngle(this.LD, -pitch);
-        this.yawQuaternion.setFromAxisAngle(this.UD, -yaw);
 
-        this.camera.setRotationFromQuaternion(this.yawQuaternion.multiply(this.camera.quaternion.multiply(this.pitchQuaternion)));
+        this.currentPitch += pitch;
+        this.currentPitch = Math.max(-this.maxPitch, Math.min(this.maxPitch, this.currentPitch));
+
+        this.currentYaw += yaw;
+
+        this.pitchQuaternion.setFromAxisAngle(this.LD, -this.currentPitch);
+        this.yawQuaternion.setFromAxisAngle(this.UD, -this.currentYaw);
+
+        this.camera.setRotationFromQuaternion(this.yawQuaternion.multiply(this.pitchQuaternion));
 
     }
     
