@@ -83,13 +83,13 @@ async function main(vr = false) {
 
     scene.add(directionalLight);
 
-    const lavaLight = new PointLight(0xFC6A00, 1, 10);
-    lavaLight.position.set(25, 17, 0);
-    scene.add(lavaLight);
-
     // Set direction
     directionalLight.target.position.set(0, 15, 0);
     scene.add(directionalLight.target);
+
+    const lavaLight = new DirectionalLight(0xFC6A00);
+    lavaLight.position.set(25, 17, 0);
+    scene.add(lavaLight);
 
     camera.position.z = 70;
     camera.position.y = 55;

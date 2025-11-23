@@ -11,15 +11,14 @@ export default class Lava extends THREE.Mesh {
                 time: 1.0,
                 noiseMap: new THREE.TextureLoader().load('./resources/textures/noise.png'),
                 diffuseMap: new THREE.TextureLoader().load('./resources/textures/lava.jpg')
-            }
+            },
+            lights: true
+            
         })
 
         super(geometry, material);
         this.rotation.x = -Math.PI / 2;
         this.position.set(25, 16, 0);
-
-        const lavaLight = new THREE.PointLight(0xFC6A00, 100, 100);
-        lavaLight.position.set(25, 17, 0);
 
     }
 
