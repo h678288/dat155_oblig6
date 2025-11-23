@@ -39,11 +39,11 @@ export default class LavaShader extends ShaderMaterial {
 
             void main(void) {
 
-                vec2 position = - 1.0 + 2.0 * vUv;
+                vec2 position = -1.0 + 2.0 * vUv;
 
                 vec4 noise = texture2D( noiseMap, vUv );
-                vec2 T1 = vUv + vec2( 1.5, - 1.5 ) * time * 0.02;
-                vec2 T2 = vUv + vec2( - 0.5, 2.0 ) * time * 0.01;
+                vec2 T1 = vUv + vec2( 1.5, -1.5 ) * time * 0.02;
+                vec2 T2 = vUv + vec2( -0.5, 2.0 ) * time * 0.01;
 
                 T1.x += noise.x * 2.0;
                 T1.y += noise.y * 2.0;
